@@ -16,70 +16,83 @@ namespace TacticaSoftLeandroRodriguez.Services
     {
         public static void AgregarVenta()
         {
-            Console.WriteLine("Ingresá el ID de la venta");
+            Venta venta = new Venta();
+
+            Console.WriteLine("Ingresá el ID de la venta:");
             if (!int.TryParse(Console.ReadLine(), out int idVenta))
             {
-                Console.WriteLine("No es un número válido");
+                Console.WriteLine("No es un número válido.");
                 return;
             }
-            Console.WriteLine("Ingresá el ID del producto");
+            venta.ID = idVenta;
+
+            Console.WriteLine("Ingresá el ID del producto:");
             if (!int.TryParse(Console.ReadLine(), out int idProducto))
             {
-                Console.WriteLine("No es un número válido");
+                Console.WriteLine("No es un número válido.");
                 return;
             }
 
-            Console.WriteLine("Ingresá la cantidad");
-            string cantidad = Console.ReadLine();
-
-            if (!float.TryParse(cantidad, out float cantidadParseada) || cantidadParseada <= 0)
+            Console.WriteLine("Ingresá la cantidad:");
+            if (!float.TryParse(Console.ReadLine(), out float cantidad) || cantidad <= 0)
             {
-                Console.WriteLine("La cantidad debe ser mayor a 0");
+                Console.WriteLine("La cantidad debe ser mayor a 0.");
                 return;
             }
-            Console.WriteLine("Ingresá el precio unitario del producto");
+
+            Console.WriteLine("Ingresá el precio unitario del producto:");
             if (!float.TryParse(Console.ReadLine(), out float precioUnitario) || precioUnitario <= 0)
             {
-                Console.WriteLine("No es un número válido y debe ser mayor a 0");
+                Console.WriteLine("El precio debe ser mayor a 0.");
                 return;
             }
 
+            // Crear el item y agregarlo a la venta
             VentaItem item = new VentaItem
             {
-                IDVenta = idVenta,
+                IDVenta = venta.ID,
                 IDProducto = idProducto,
-                Cantidad = cantidadParseada,
+                Cantidad = cantidad,
                 PrecioUnitario = precioUnitario
                 // PrecioTotal se calcula automáticamente
             };
+            venta.Items.Add(item);
 
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string query = "INSERT INTO ventasitems " +
-                        "(IDVenta, IDProducto, PrecioUnitario, Cantidad, PrecioTotal) " +
-                        "VALUES (@IDVenta, @IDProducto, @PrecioUnitario, @Cantidad, @PrecioTotal)";
-                    using (SqlCommand cmd = new SqlCommand(query, connection))
+
+                    foreach (var ventaItem in venta.Items)
                     {
-                        cmd.Parameters.AddWithValue("@IDVenta", item.IDVenta);
-                        cmd.Parameters.AddWithValue("@IDProducto", item.IDProducto);
-                        cmd.Parameters.AddWithValue("@PrecioUnitario", item.PrecioUnitario);
-                        cmd.Parameters.AddWithValue("@Cantidad", item.Cantidad);
-                        cmd.Parameters.AddWithValue("@PrecioTotal", item.PrecioTotal);
-                        cmd.ExecuteNonQuery();
+                        string query = "INSERT INTO ventasitems " +
+                                       "(IDVenta, IDProducto, PrecioUnitario, Cantidad, PrecioTotal) " +
+                                       "VALUES (@IDVenta, @IDProducto, @PrecioUnitario, @Cantidad, @PrecioTotal)";
+
+                        using (SqlCommand cmd = new SqlCommand(query, connection))
+                        {
+                            cmd.Parameters.AddWithValue("@IDVenta", ventaItem.IDVenta);
+                            cmd.Parameters.AddWithValue("@IDProducto", ventaItem.IDProducto);
+                            cmd.Parameters.AddWithValue("@PrecioUnitario", ventaItem.PrecioUnitario);
+                            cmd.Parameters.AddWithValue("@Cantidad", ventaItem.Cantidad);
+                            cmd.Parameters.AddWithValue("@PrecioTotal", ventaItem.PrecioTotal);
+                            cmd.ExecuteNonQuery();
+                        }
                     }
                 }
-                Console.WriteLine("Venta agregada exitosamente");
+
+                Console.WriteLine("Venta agregada exitosamente.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error al agregar la venta " + ex.Message);
+                Console.WriteLine("Error al agregar la venta: " + ex.Message);
             }
+
             Console.WriteLine("\nPresione una tecla para volver al menú...");
             Console.ReadKey();
         }
+
 
 
         public static void EliminarVenta()
@@ -91,7 +104,7 @@ namespace TacticaSoftLeandroRodriguez.Services
                 return;
             }
 
-            Venta venta = new Venta
+            VentaItem venta = new VentaItem
             {
                 ID = idVenta
             };
@@ -101,44 +114,23 @@ namespace TacticaSoftLeandroRodriguez.Services
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-
-                    string checkQuery = "SELECT 1 FROM ventas WHERE ID = @ID";
-                    using (SqlCommand checkCmd = new SqlCommand(checkQuery, connection))
+                    string query = "DELETE FROM ventasitems WHERE IDVenta = @IDVenta";
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        checkCmd.Parameters.AddWithValue("@ID", venta.ID);
-                        using (SqlDataReader reader = checkCmd.ExecuteReader())
+                        command.Parameters.AddWithValue("@IDVenta", venta.ID);
+                        int filas = command.ExecuteNonQuery();
+                        if (filas > 0)
                         {
-                            if (!reader.HasRows)
-                            {
-                                Console.WriteLine("No se encontró una venta con ese ID.");
-                                return;
-                            }
-                        }
-                    }
-
-                    string queryItems = "DELETE FROM ventasitems WHERE IDVenta = @IDVenta";
-                    using (SqlCommand cmdItems = new SqlCommand(queryItems, connection))
-                    {
-                        cmdItems.Parameters.AddWithValue("@IDVenta", venta.ID);
-                        cmdItems.ExecuteNonQuery();
-                    }
-
-                    string queryVenta = "DELETE FROM ventas WHERE ID = @ID";
-                    using (SqlCommand cmdVenta = new SqlCommand(queryVenta, connection))
-                    {
-                        cmdVenta.Parameters.AddWithValue("@ID", venta.ID);
-                        int filasAfectadas = cmdVenta.ExecuteNonQuery();
-
-                        if (filasAfectadas > 0)
-                        {
-                            Console.WriteLine("Venta eliminada exitosamente.");
+                            Console.WriteLine($"{filas} venta eliminada correctamente.");
                         }
                         else
                         {
-                            Console.WriteLine("No se pudo eliminar la venta.");
+                            Console.WriteLine("No se encontró una venta con ese ID.");
                         }
                     }
+
                 }
+
             }
             catch (Exception ex)
             {

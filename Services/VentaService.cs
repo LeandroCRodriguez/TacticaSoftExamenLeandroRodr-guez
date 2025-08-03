@@ -4,25 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
-using static TacticaSoftLeandroRodriguez.Database;
+using TacticaSoftLeandroRodriguez.Entities;
+using static TacticaSoftLeandroRodriguez.Repositories.Database;
 
 
 
 
-namespace TacticaSoftLeandroRodriguez
+namespace TacticaSoftLeandroRodriguez.Services
 {
     public class VentaService
     {
         public static void AgregarVenta()
         {
             Console.WriteLine("Ingresá el ID de la venta");
-            if(!int.TryParse(Console.ReadLine(), out int idVenta))
+            if (!int.TryParse(Console.ReadLine(), out int idVenta))
             {
                 Console.WriteLine("No es un número válido");
                 return;
             }
             Console.WriteLine("Ingresá el ID del producto");
-            if(!int.TryParse(Console.ReadLine(), out int idProducto))
+            if (!int.TryParse(Console.ReadLine(), out int idProducto))
             {
                 Console.WriteLine("No es un número válido");
                 return;
@@ -30,7 +31,7 @@ namespace TacticaSoftLeandroRodriguez
 
             Console.WriteLine("Ingresá la cantidad");
             string cantidad = Console.ReadLine();
-            
+
             if (!float.TryParse(cantidad, out float cantidadParseada) || cantidadParseada <= 0)
             {
                 Console.WriteLine("La cantidad debe ser mayor a 0");
@@ -54,7 +55,7 @@ namespace TacticaSoftLeandroRodriguez
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(Database.connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     string query = "INSERT INTO ventasitems " +
@@ -72,13 +73,15 @@ namespace TacticaSoftLeandroRodriguez
                 }
                 Console.WriteLine("Venta agregada exitosamente");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Console.WriteLine("Error al agregar la venta " +ex.Message);
+                Console.WriteLine("Error al agregar la venta " + ex.Message);
             }
             Console.WriteLine("\nPresione una tecla para volver al menú...");
             Console.ReadKey();
         }
+
+
         public static void EliminarVenta()
         {
             Console.WriteLine("Ingresá el ID de la venta que querés eliminar");
@@ -95,11 +98,24 @@ namespace TacticaSoftLeandroRodriguez
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(Database.connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
 
-                    // Primero eliminamos los ítems asociados a la venta
+                    string checkQuery = "SELECT 1 FROM ventas WHERE ID = @ID";
+                    using (SqlCommand checkCmd = new SqlCommand(checkQuery, connection))
+                    {
+                        checkCmd.Parameters.AddWithValue("@ID", venta.ID);
+                        using (SqlDataReader reader = checkCmd.ExecuteReader())
+                        {
+                            if (!reader.HasRows)
+                            {
+                                Console.WriteLine("No se encontró una venta con ese ID.");
+                                return;
+                            }
+                        }
+                    }
+
                     string queryItems = "DELETE FROM ventasitems WHERE IDVenta = @IDVenta";
                     using (SqlCommand cmdItems = new SqlCommand(queryItems, connection))
                     {
@@ -107,7 +123,6 @@ namespace TacticaSoftLeandroRodriguez
                         cmdItems.ExecuteNonQuery();
                     }
 
-                    // Luego eliminamos la venta
                     string queryVenta = "DELETE FROM ventas WHERE ID = @ID";
                     using (SqlCommand cmdVenta = new SqlCommand(queryVenta, connection))
                     {
@@ -120,7 +135,7 @@ namespace TacticaSoftLeandroRodriguez
                         }
                         else
                         {
-                            Console.WriteLine("No se encontró una venta con ese ID.");
+                            Console.WriteLine("No se pudo eliminar la venta.");
                         }
                     }
                 }
@@ -133,6 +148,7 @@ namespace TacticaSoftLeandroRodriguez
             Console.WriteLine("\nPresione una tecla para volver al menú...");
             Console.ReadKey();
         }
+
 
 
         public static void ModificarVenta()
@@ -152,7 +168,7 @@ namespace TacticaSoftLeandroRodriguez
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(Database.connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     string query = "SELECT 1 FROM ventasitems WHERE IDVenta = @IDVenta AND IDProducto = @IDProducto";
@@ -215,25 +231,28 @@ namespace TacticaSoftLeandroRodriguez
                         }
                     }
                 }
-                }catch (Exception ex)
-                {
-                    Console.WriteLine("Error al buscar la venta: " + ex.Message);
-                    return;
-                }
             }
-                
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al buscar la venta: " + ex.Message);
+                return;
+            }
+            Console.WriteLine("\nPresione una tecla para volver al menú...");
+            Console.ReadKey();
+        }
+
 
         public static void MostrarTotalVentas()
         {
             Console.WriteLine("Total de ventas realizadas: ");
 
-            using (SqlConnection connection = new SqlConnection(Database.connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 string query = "SELECT IDVenta, IDProducto, PrecioUnitario, Cantidad, PrecioTotal FROM ventasitems";
                 using (SqlCommand cmd = new SqlCommand(query, connection))
                 {
-                    using (SqlDataReader  reader = cmd.ExecuteReader())
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         float totalGeneral = 0;
                         while (reader.Read())

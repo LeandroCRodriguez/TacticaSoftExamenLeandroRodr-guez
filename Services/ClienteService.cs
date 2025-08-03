@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
+using TacticaSoftLeandroRodriguez.Entities;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-using static TacticaSoftLeandroRodriguez.Database;
+using static TacticaSoftLeandroRodriguez.Repositories.Database;
 
 
-namespace TacticaSoftLeandroRodriguez
+namespace TacticaSoftLeandroRodriguez.Services
 {
     public class ClienteService
     {
@@ -50,7 +51,7 @@ namespace TacticaSoftLeandroRodriguez
                 cliente.ID = clienteId;
                 try
                 {
-                    using (SqlConnection connection = new SqlConnection(Database.connectionString))
+                    using (SqlConnection connection = new SqlConnection(connectionString))
                     {
                         connection.Open();
                         string query = "DELETE FROM Clientes WHERE Id = @Id";
@@ -80,7 +81,8 @@ namespace TacticaSoftLeandroRodriguez
             {
                 Console.WriteLine("ID Inválido");
             }
-            System.Threading.Thread.Sleep(2000);
+            Console.WriteLine("\nPresione una tecla para volver al menú...");
+            Console.ReadKey();
         }
 
 
@@ -143,7 +145,7 @@ namespace TacticaSoftLeandroRodriguez
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(Database.connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     string query = $"UPDATE Clientes SET {campos} WHERE ID = @ID";
@@ -169,7 +171,8 @@ namespace TacticaSoftLeandroRodriguez
                 Console.WriteLine("Error al modificar el cliente: " + ex.Message);
 
             }
-            System.Threading.Thread.Sleep(2000);
+            Console.WriteLine("\nPresione una tecla para volver al menú...");
+            Console.ReadKey();
         }
 
 
@@ -203,7 +206,7 @@ namespace TacticaSoftLeandroRodriguez
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(Database.connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     string query = "INSERT INTO Clientes (Cliente, Telefono, Correo) VALUES (@Cliente, @Telefono, @Correo)";
@@ -222,7 +225,8 @@ namespace TacticaSoftLeandroRodriguez
                 Console.WriteLine("Error al agregar al cliente: " + ex.Message);
 
             }
-            System.Threading.Thread.Sleep(2000);
+            Console.WriteLine("\nPresione una tecla para volver al menú...");
+            Console.ReadKey();
         }
 
         public static void BuscarClientePorNombre()
@@ -275,11 +279,11 @@ namespace TacticaSoftLeandroRodriguez
         {
             Console.WriteLine("Ingrese el ID del cliente a buscar: ");
             string idCliente = Console.ReadLine();
-            
+
             if (!int.TryParse(idCliente, out int idParseado))
             {
                 Console.WriteLine("ID inválido. Debe ser un número entero.");
-                return;            
+                return;
             }
 
             try
@@ -295,7 +299,7 @@ namespace TacticaSoftLeandroRodriguez
                         {
                             if (reader.HasRows)
                             {
-                                while(reader.Read())
+                                while (reader.Read())
                                 {
                                     Console.WriteLine($"ID: {reader["ID"]} | Nombre: {reader["Cliente"]} | Tel: {reader["Telefono"]} | Correo: {reader["Correo"]}");
                                     Console.WriteLine();
@@ -308,9 +312,10 @@ namespace TacticaSoftLeandroRodriguez
                         }
                     }
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
-                Console.WriteLine("Error al buscar el cliente"+ ex.Message);
+                Console.WriteLine("Error al buscar el cliente" + ex.Message);
             }
             Console.WriteLine("\nPresione una tecla para volver al menú...");
             Console.ReadKey();

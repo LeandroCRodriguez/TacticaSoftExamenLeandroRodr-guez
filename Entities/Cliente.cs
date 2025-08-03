@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TacticaSoftLeandroRodriguez
+namespace TacticaSoftLeandroRodriguez.Entities
 {
     public class Cliente
     {

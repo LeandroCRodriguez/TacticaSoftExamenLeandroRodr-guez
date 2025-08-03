@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
+using TacticaSoftLeandroRodriguez.Entities;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-using static TacticaSoftLeandroRodriguez.Database;
+using static TacticaSoftLeandroRodriguez.Repositories.Database;
 
 
 
-namespace TacticaSoftLeandroRodriguez
+namespace TacticaSoftLeandroRodriguez.Services
 {
     public class ProductoService
     {
@@ -44,7 +45,7 @@ namespace TacticaSoftLeandroRodriguez
 
         public static void EliminarProducto()
         {
-            Producto producto = new Producto(); 
+            Producto producto = new Producto();
 
             Console.WriteLine("ingrese ID del producto a eliminar");
             if (!int.TryParse(Console.ReadLine(), out int productoId))
@@ -54,33 +55,34 @@ namespace TacticaSoftLeandroRodriguez
             }
             producto.ID = productoId;
             try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    connection.Open();
+                    string query = "DELETE FROM Productos WHERE Id = @ID";
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        connection.Open();
-                        string query = "DELETE FROM Productos WHERE Id = @ID";
-                        using (SqlCommand command = new SqlCommand(query, connection))
+                        command.Parameters.AddWithValue("@ID", producto.ID);
+                        int filas = command.ExecuteNonQuery();
+
+                        if (filas > 0)
                         {
-                            command.Parameters.AddWithValue("@ID", producto.ID);
-                            int filas = command.ExecuteNonQuery();
-
-                            if (filas > 0)
-                            {
-                                Console.WriteLine($"{filas} producto eliminado correctamente.");
-                            }
-                            else
-                            {
-                                Console.WriteLine("No se encontró un producto con ese ID.");
-                            }
+                            Console.WriteLine($"{filas} producto eliminado correctamente.");
                         }
-
+                        else
+                        {
+                            Console.WriteLine("No se encontró un producto con ese ID.");
+                        }
                     }
+
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error al eliminar el producto: " + ex.Message);
-                }      
-            System.Threading.Thread.Sleep(2000);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al eliminar el producto: " + ex.Message);
+            }
+            Console.WriteLine("\nPresione una tecla para volver al menú...");
+            Console.ReadKey();
         }
 
 
@@ -169,7 +171,8 @@ namespace TacticaSoftLeandroRodriguez
                 Console.WriteLine("Error al modificar el producto: " + ex.Message);
 
             }
-            System.Threading.Thread.Sleep(2000);
+            Console.WriteLine("\nPresione una tecla para volver al menú...");
+            Console.ReadKey();
         }
 
 
@@ -228,7 +231,8 @@ namespace TacticaSoftLeandroRodriguez
                 Console.WriteLine("Error al agregar al producto: " + ex.Message);
 
             }
-            System.Threading.Thread.Sleep(2000);
+            Console.WriteLine("\nPresione una tecla para volver al menú...");
+            Console.ReadKey();
         }
 
         public static void BuscarProductoPorNombre()

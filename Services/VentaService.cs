@@ -17,6 +17,7 @@ namespace TacticaSoftLeandroRodriguez.Services
         public static void AgregarVenta()
         {
             Venta venta = new Venta();
+            venta.Fecha = DateTime.Now;
 
             Console.WriteLine("Ingresá el ID de la venta:");
             if (!int.TryParse(Console.ReadLine(), out int idVenta))
@@ -25,6 +26,8 @@ namespace TacticaSoftLeandroRodriguez.Services
                 return;
             }
             venta.ID = idVenta;
+
+            venta.IDCliente = 0;
 
             Console.WriteLine("Ingresá el ID del producto:");
             if (!int.TryParse(Console.ReadLine(), out int idProducto))
@@ -47,16 +50,17 @@ namespace TacticaSoftLeandroRodriguez.Services
                 return;
             }
 
-            // Crear el item y agregarlo a la venta
             VentaItem item = new VentaItem
             {
                 IDVenta = venta.ID,
                 IDProducto = idProducto,
                 Cantidad = cantidad,
                 PrecioUnitario = precioUnitario
-                // PrecioTotal se calcula automáticamente
+                // PrecioTotal se calcula automáticamente desde la clase VentaItem.cs
             };
+
             venta.Items.Add(item);
+            venta.Total = item.PrecioTotal; 
 
             try
             {
@@ -64,20 +68,31 @@ namespace TacticaSoftLeandroRodriguez.Services
                 {
                     connection.Open();
 
+                    string insertVenta = "INSERT INTO ventas (IDCliente, Fecha, Total) " +
+                                         "VALUES (@IDCliente, @Fecha, @Total)";
+                    using (SqlCommand cmdVenta = new SqlCommand(insertVenta, connection))
+                    {
+                        cmdVenta.Parameters.AddWithValue("@IDCliente", venta.IDCliente);
+                        cmdVenta.Parameters.AddWithValue("@Fecha", venta.Fecha);
+                        cmdVenta.Parameters.AddWithValue("@Total", venta.Total);
+                        cmdVenta.ExecuteNonQuery();
+                        object result = cmdVenta.ExecuteScalar();
+                        venta.ID = Convert.ToInt32(result);
+                    }
+
                     foreach (var ventaItem in venta.Items)
                     {
-                        string query = "INSERT INTO ventasitems " +
-                                       "(IDVenta, IDProducto, PrecioUnitario, Cantidad, PrecioTotal) " +
-                                       "VALUES (@IDVenta, @IDProducto, @PrecioUnitario, @Cantidad, @PrecioTotal)";
-
-                        using (SqlCommand cmd = new SqlCommand(query, connection))
+                        string queryItem = "INSERT INTO ventasitems " +
+                                           "(IDVenta, IDProducto, PrecioUnitario, Cantidad, PrecioTotal) " +
+                                           "VALUES (@IDVenta, @IDProducto, @PrecioUnitario, @Cantidad, @PrecioTotal)";
+                        using (SqlCommand cmdItem = new SqlCommand(queryItem, connection))
                         {
-                            cmd.Parameters.AddWithValue("@IDVenta", ventaItem.IDVenta);
-                            cmd.Parameters.AddWithValue("@IDProducto", ventaItem.IDProducto);
-                            cmd.Parameters.AddWithValue("@PrecioUnitario", ventaItem.PrecioUnitario);
-                            cmd.Parameters.AddWithValue("@Cantidad", ventaItem.Cantidad);
-                            cmd.Parameters.AddWithValue("@PrecioTotal", ventaItem.PrecioTotal);
-                            cmd.ExecuteNonQuery();
+                            cmdItem.Parameters.AddWithValue("@IDVenta", ventaItem.IDVenta);
+                            cmdItem.Parameters.AddWithValue("@IDProducto", ventaItem.IDProducto);
+                            cmdItem.Parameters.AddWithValue("@PrecioUnitario", ventaItem.PrecioUnitario);
+                            cmdItem.Parameters.AddWithValue("@Cantidad", ventaItem.Cantidad);
+                            cmdItem.Parameters.AddWithValue("@PrecioTotal", ventaItem.PrecioTotal);
+                            cmdItem.ExecuteNonQuery();
                         }
                     }
                 }
@@ -92,6 +107,7 @@ namespace TacticaSoftLeandroRodriguez.Services
             Console.WriteLine("\nPresione una tecla para volver al menú...");
             Console.ReadKey();
         }
+
 
 
 

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TacticaSoftLeandroRodriguez")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0ddb8774e11fa2a3d3226d2960b98aa410e3f451")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a260adecf146da2d4e2c0ead0752957631e9dd56")]
 [assembly: System.Reflection.AssemblyProductAttribute("TacticaSoftLeandroRodriguez")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TacticaSoftLeandroRodriguez")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

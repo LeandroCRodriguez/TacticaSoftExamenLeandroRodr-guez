@@ -1,0 +1,157 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Lean\\source\\repos\\TacticaSoftLeandroRodriguez\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{129DB18E-0E3D-4F4D-ABDA-A9DBB46324AE}|TacticaSoftLeandroRodriguez.csproj|c:\\users\\lean\\source\\repos\\tacticasoftleandrorodriguez\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{129DB18E-0E3D-4F4D-ABDA-A9DBB46324AE}|TacticaSoftLeandroRodriguez.csproj|solutionrelative:cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{129DB18E-0E3D-4F4D-ABDA-A9DBB46324AE}|TacticaSoftLeandroRodriguez.csproj|c:\\users\\lean\\source\\repos\\tacticasoftleandrorodriguez\\clienteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{129DB18E-0E3D-4F4D-ABDA-A9DBB46324AE}|TacticaSoftLeandroRodriguez.csproj|solutionrelative:clienteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{129DB18E-0E3D-4F4D-ABDA-A9DBB46324AE}|TacticaSoftLeandroRodriguez.csproj|c:\\users\\lean\\source\\repos\\tacticasoftleandrorodriguez\\ventaitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{129DB18E-0E3D-4F4D-ABDA-A9DBB46324AE}|TacticaSoftLeandroRodriguez.csproj|solutionrelative:ventaitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{129DB18E-0E3D-4F4D-ABDA-A9DBB46324AE}|TacticaSoftLeandroRodriguez.csproj|c:\\users\\lean\\source\\repos\\tacticasoftleandrorodriguez\\venta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{129DB18E-0E3D-4F4D-ABDA-A9DBB46324AE}|TacticaSoftLeandroRodriguez.csproj|solutionrelative:venta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{129DB18E-0E3D-4F4D-ABDA-A9DBB46324AE}|TacticaSoftLeandroRodriguez.csproj|c:\\users\\lean\\source\\repos\\tacticasoftleandrorodriguez\\ventaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{129DB18E-0E3D-4F4D-ABDA-A9DBB46324AE}|TacticaSoftLeandroRodriguez.csproj|solutionrelative:ventaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{129DB18E-0E3D-4F4D-ABDA-A9DBB46324AE}|TacticaSoftLeandroRodriguez.csproj|c:\\users\\lean\\source\\repos\\tacticasoftleandrorodriguez\\producto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{129DB18E-0E3D-4F4D-ABDA-A9DBB46324AE}|TacticaSoftLeandroRodriguez.csproj|solutionrelative:producto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{129DB18E-0E3D-4F4D-ABDA-A9DBB46324AE}|TacticaSoftLeandroRodriguez.csproj|c:\\users\\lean\\source\\repos\\tacticasoftleandrorodriguez\\productoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{129DB18E-0E3D-4F4D-ABDA-A9DBB46324AE}|TacticaSoftLeandroRodriguez.csproj|solutionrelative:productoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{129DB18E-0E3D-4F4D-ABDA-A9DBB46324AE}|TacticaSoftLeandroRodriguez.csproj|c:\\users\\lean\\source\\repos\\tacticasoftleandrorodriguez\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{129DB18E-0E3D-4F4D-ABDA-A9DBB46324AE}|TacticaSoftLeandroRodriguez.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Cliente.cs",
+              "DocumentMoniker": "C:\\Users\\Lean\\source\\repos\\TacticaSoftLeandroRodriguez\\Cliente.cs",
+              "RelativeDocumentMoniker": "Cliente.cs",
+              "ToolTip": "C:\\Users\\Lean\\source\\repos\\TacticaSoftLeandroRodriguez\\Cliente.cs",
+              "RelativeToolTip": "Cliente.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA0AAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-02T22:02:03.077Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ClienteService.cs",
+              "DocumentMoniker": "C:\\Users\\Lean\\source\\repos\\TacticaSoftLeandroRodriguez\\ClienteService.cs",
+              "RelativeDocumentMoniker": "ClienteService.cs",
+              "ToolTip": "C:\\Users\\Lean\\source\\repos\\TacticaSoftLeandroRodriguez\\ClienteService.cs",
+              "RelativeToolTip": "ClienteService.cs",
+              "ViewState": "AgIAAFMAAAAAAAAAAAAqwF8AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-31T00:41:08.175Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "VentaItem.cs",
+              "DocumentMoniker": "C:\\Users\\Lean\\source\\repos\\TacticaSoftLeandroRodriguez\\VentaItem.cs",
+              "RelativeDocumentMoniker": "VentaItem.cs",
+              "ToolTip": "C:\\Users\\Lean\\source\\repos\\TacticaSoftLeandroRodriguez\\VentaItem.cs",
+              "RelativeToolTip": "VentaItem.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABAAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-31T20:10:03.457Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Venta.cs",
+              "DocumentMoniker": "C:\\Users\\Lean\\source\\repos\\TacticaSoftLeandroRodriguez\\Venta.cs",
+              "RelativeDocumentMoniker": "Venta.cs",
+              "ToolTip": "C:\\Users\\Lean\\source\\repos\\TacticaSoftLeandroRodriguez\\Venta.cs",
+              "RelativeToolTip": "Venta.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-02T22:50:53.56Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "VentaService.cs",
+              "DocumentMoniker": "C:\\Users\\Lean\\source\\repos\\TacticaSoftLeandroRodriguez\\VentaService.cs",
+              "RelativeDocumentMoniker": "VentaService.cs",
+              "ToolTip": "C:\\Users\\Lean\\source\\repos\\TacticaSoftLeandroRodriguez\\VentaService.cs",
+              "RelativeToolTip": "VentaService.cs",
+              "ViewState": "AgIAAH0AAAAAAAAAAAAAAIcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-31T20:12:04.271Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Producto.cs",
+              "DocumentMoniker": "C:\\Users\\Lean\\source\\repos\\TacticaSoftLeandroRodriguez\\Producto.cs",
+              "RelativeDocumentMoniker": "Producto.cs",
+              "ToolTip": "C:\\Users\\Lean\\source\\repos\\TacticaSoftLeandroRodriguez\\Producto.cs",
+              "RelativeToolTip": "Producto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-02T22:40:20.101Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ProductoService.cs",
+              "DocumentMoniker": "C:\\Users\\Lean\\source\\repos\\TacticaSoftLeandroRodriguez\\ProductoService.cs",
+              "RelativeDocumentMoniker": "ProductoService.cs",
+              "ToolTip": "C:\\Users\\Lean\\source\\repos\\TacticaSoftLeandroRodriguez\\ProductoService.cs",
+              "RelativeToolTip": "ProductoService.cs",
+              "ViewState": "AgIAAKcAAAAAAAAAAAAwwK4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-31T01:20:31.302Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Lean\\source\\repos\\TacticaSoftLeandroRodriguez\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Lean\\source\\repos\\TacticaSoftLeandroRodriguez\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAGUAAAAAAAAAAAAAAHsAAABOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-30T15:10:18.654Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

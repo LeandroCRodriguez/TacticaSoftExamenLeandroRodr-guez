@@ -27,7 +27,7 @@ namespace TacticaSoftLeandroRodriguez.Services
             }
             venta.ID = idVenta;
 
-            venta.IDCliente = 0;
+            
 
             Console.WriteLine("Ingresá el ID del producto:");
             if (!int.TryParse(Console.ReadLine(), out int idProducto))
@@ -35,6 +35,16 @@ namespace TacticaSoftLeandroRodriguez.Services
                 Console.WriteLine("No es un número válido.");
                 return;
             }
+
+            Console.WriteLine("Ingresá el ID del cliente:");
+            if (!int.TryParse(Console.ReadLine(), out int idCliente))
+            {
+                Console.WriteLine("No es un número válido.");
+                return;
+            }
+
+            venta.IDCliente = idCliente;
+
 
             Console.WriteLine("Ingresá la cantidad:");
             if (!float.TryParse(Console.ReadLine(), out float cantidad) || cantidad <= 0)

@@ -16,10 +16,8 @@ namespace TacticaSoftLeandroRodriguez.Entities
 
         public string Categoria { get; set; }
 
-        // Constructor vacío
         public Producto() { }
 
-        // Constructor con parámetros (opcional)
         public Producto(int id, string nombre, float precio, string categoria)
         {
             ID = id;

@@ -101,11 +101,10 @@ namespace TacticaSoftLeandroRodriguez.Services
 
             Console.WriteLine("Ingresá el nuevo precio o presioná enter para dejarlo igual");
             string precioTexto = Console.ReadLine();
-            // Usamos decimal? para permitir que el precio sea nulo si no se ingresa un valor
-            decimal? nuevoPrecio = null;
+            float? nuevoPrecio = null;
             if (!string.IsNullOrWhiteSpace(precioTexto))
             {
-                if (!decimal.TryParse(precioTexto, out decimal precioConvertido))
+                if (!float.TryParse(precioTexto, out float precioConvertido))
                 {
                     Console.WriteLine("Precio inválido.");
                     return;

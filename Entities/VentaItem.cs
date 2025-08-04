@@ -17,7 +17,7 @@ namespace TacticaSoftLeandroRodriguez.Entities
         public float PrecioTotal
         {
             get { return PrecioUnitario * Cantidad; }
-            set { /* necesario para leer desde la base */ }
+            set {  }
         }
     }
 

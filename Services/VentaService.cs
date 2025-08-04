@@ -17,17 +17,7 @@ namespace TacticaSoftLeandroRodriguez.Services
         public static void AgregarVenta()
         {
             Venta venta = new Venta();
-            venta.Fecha = DateTime.Now;
-
-            Console.WriteLine("Ingresá el ID de la venta:");
-            if (!int.TryParse(Console.ReadLine(), out int idVenta))
-            {
-                Console.WriteLine("No es un número válido.");
-                return;
-            }
-            venta.ID = idVenta;
-
-            
+            venta.Fecha = DateTime.Now;         
 
             Console.WriteLine("Ingresá el ID del producto:");
             if (!int.TryParse(Console.ReadLine(), out int idProducto))
@@ -70,7 +60,7 @@ namespace TacticaSoftLeandroRodriguez.Services
             };
 
             venta.Items.Add(item);
-            venta.Total = item.PrecioTotal; 
+            venta.Total = item.PrecioTotal;
 
             try
             {
@@ -79,19 +69,20 @@ namespace TacticaSoftLeandroRodriguez.Services
                     connection.Open();
 
                     string insertVenta = "INSERT INTO ventas (IDCliente, Fecha, Total) " +
-                                         "VALUES (@IDCliente, @Fecha, @Total)";
+                                 "OUTPUT INSERTED.ID " +
+                                 "VALUES (@IDCliente, @Fecha, @Total)";
                     using (SqlCommand cmdVenta = new SqlCommand(insertVenta, connection))
                     {
                         cmdVenta.Parameters.AddWithValue("@IDCliente", venta.IDCliente);
                         cmdVenta.Parameters.AddWithValue("@Fecha", venta.Fecha);
                         cmdVenta.Parameters.AddWithValue("@Total", venta.Total);
-                        cmdVenta.ExecuteNonQuery();
-                        object result = cmdVenta.ExecuteScalar();
-                        venta.ID = Convert.ToInt32(result);
+                        venta.ID = Convert.ToInt32(cmdVenta.ExecuteScalar());
                     }
+
 
                     foreach (var ventaItem in venta.Items)
                     {
+                        ventaItem.IDVenta = venta.ID;
                         string queryItem = "INSERT INTO ventasitems " +
                                            "(IDVenta, IDProducto, PrecioUnitario, Cantidad, PrecioTotal) " +
                                            "VALUES (@IDVenta, @IDProducto, @PrecioUnitario, @Cantidad, @PrecioTotal)";
@@ -130,31 +121,32 @@ namespace TacticaSoftLeandroRodriguez.Services
                 return;
             }
 
-            VentaItem venta = new VentaItem
-            {
-                ID = idVenta
-            };
-
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string query = "DELETE FROM ventasitems WHERE IDVenta = @IDVenta";
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    string queryItems = "DELETE FROM ventasitems WHERE IDVenta = @IDVenta";
+                    using (SqlCommand cmdItems = new SqlCommand(queryItems, connection))
                     {
-                        command.Parameters.AddWithValue("@IDVenta", venta.ID);
-                        int filas = command.ExecuteNonQuery();
+                        cmdItems.Parameters.AddWithValue("@IDVenta", idVenta);
+                        cmdItems.ExecuteNonQuery();
+                    }
+                    string queryVenta = "DELETE FROM ventas WHERE ID = @IDVenta";
+
+                    using (SqlCommand cmdVenta = new SqlCommand(queryVenta, connection))
+                    {
+                        cmdVenta.Parameters.AddWithValue("@IDVenta", idVenta);
+                        int filas = cmdVenta.ExecuteNonQuery();
                         if (filas > 0)
                         {
-                            Console.WriteLine($"{filas} venta eliminada correctamente.");
+                            Console.WriteLine($"Venta ID {idVenta} eliminada correctamente.");
                         }
                         else
                         {
                             Console.WriteLine("No se encontró una venta con ese ID.");
                         }
                     }
-
                 }
 
             }
@@ -238,15 +230,31 @@ namespace TacticaSoftLeandroRodriguez.Services
                         updateCmd.Parameters.AddWithValue("@PrecioTotal", item.PrecioTotal);
                         updateCmd.Parameters.AddWithValue("@IDVenta", item.IDVenta);
                         updateCmd.Parameters.AddWithValue("@IDProducto", item.IDProducto);
-                        int filasAfectadas = updateCmd.ExecuteNonQuery();
-                        if (filasAfectadas > 0)
+                        updateCmd.ExecuteNonQuery();
+                    }
+                    string calcularTotal = "SELECT SUM(PrecioTotal) FROM ventasitems WHERE IDVenta = @IDVenta";
+                    float nuevoTotal = 0;
+                    using (SqlCommand cmdSuma = new SqlCommand(calcularTotal, connection))
+                    {
+                        cmdSuma.Parameters.AddWithValue("@IDVenta", idVenta);
+                        object resultado = cmdSuma.ExecuteScalar();
+                        if (resultado != DBNull.Value)
                         {
-                            Console.WriteLine("Venta modificada exitosamente");
+                            nuevoTotal = Convert.ToSingle(resultado);
                         }
+                    }
+
+                    string updateVenta = "UPDATE ventas SET Total = @Total WHERE ID = @IDVenta";
+                    using (SqlCommand cmdUpdateVenta = new SqlCommand(updateVenta, connection))
+                    {
+                        cmdUpdateVenta.Parameters.AddWithValue("@Total", nuevoTotal);
+                        cmdUpdateVenta.Parameters.AddWithValue("@IDVenta", idVenta);
+                        int filas = cmdUpdateVenta.ExecuteNonQuery();
+
+                        if (filas > 0)
+                            Console.WriteLine("Venta modificada exitosamente.");
                         else
-                        {
-                            Console.WriteLine("No se encontró una venta con ese ID de venta y ese ID de producto.");
-                        }
+                            Console.WriteLine("No se pudo actualizar el total de la venta.");
                     }
                 }
             }
